@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Caldendar;
 use Illuminate\Http\Request;
+use App\Http\Requests\UserRequest;
+use App\Models\User;
+use Illuminate\Support\Facades\Hash;
 
-class CaldendarController extends Controller
+class AuthController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -24,7 +26,7 @@ class CaldendarController extends Controller
      */
     public function create()
     {
-        //
+        return view('auth.registration');
     }
 
     /**
@@ -33,18 +35,23 @@ class CaldendarController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(UserRequest $request)
     {
-        //
+        User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+        ]);
+        return redirect()->back()->withSuccess('Registration Successful.');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Caldendar  $caldendar
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Caldendar $caldendar)
+    public function show($id)
     {
         //
     }
@@ -52,10 +59,10 @@ class CaldendarController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Caldendar  $caldendar
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Caldendar $caldendar)
+    public function edit($id)
     {
         //
     }
@@ -64,10 +71,10 @@ class CaldendarController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Caldendar  $caldendar
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Caldendar $caldendar)
+    public function update(Request $request, $id)
     {
         //
     }
@@ -75,10 +82,10 @@ class CaldendarController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Caldendar  $caldendar
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Caldendar $caldendar)
+    public function destroy($id)
     {
         //
     }
