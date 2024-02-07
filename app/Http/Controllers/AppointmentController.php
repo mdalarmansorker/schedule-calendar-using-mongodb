@@ -76,12 +76,9 @@ class AppointmentController extends Controller
         // $appointments = Appointment::all();
 
         $appointments = Appointment::where('user_id', $user_id)
-            ->where('date', '>=', $firstDate)
-            ->where('date', '<=', $lastDate)
             ->orderBy('date', 'asc')
             ->orderBy('time', 'asc')
             ->get();
-        dd($appointments);
 
         return view('welcome', [
             'month' => $monthName,
@@ -92,7 +89,7 @@ class AppointmentController extends Controller
         ]);
 
     }
-    public function store_appointments(Request $request)
+    public function StoreAppointment(Request $request)
     {
         $validatedData = $request->validate([
             'user_id' => 'required',

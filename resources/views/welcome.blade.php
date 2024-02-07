@@ -93,15 +93,15 @@
         </header>
         <main class="mx-4 lg:mx-8 ">
             <div class="flex justify-around">
-                <div class="text-center text-3xl font-extrabold mb-8 border-solid border-2 rounded-md w-48 py-1">
+                <div class="text-center text-3xl hover:border-violet-600 font-extrabold mb-8 border-solid border-2 rounded-md w-48 py-1">
                     {{$month}}
                 </div>
                 <button class="btn font-bold" onclick="my_modal_1.showModal()">Create Appointment</button>
                 <!-- Create Appointment Modal -->
                 <dialog id="my_modal_1" class="modal">
                     <div class="modal-box">
-                        <div class="modal-action ">
-                            <div class="hero-content flex-col">
+                        <div class=" ">
+                            <div class="">
                                 @if(session('success'))
                                     <div x-data="{ show: true }" x-show="show" class="bg-green-100 border-l-4 border-green-500 text-green-700 p-4 mt-6" role="alert">
                                         <p class="font-bold">Success</p>
@@ -109,10 +109,14 @@
                                         <p class="cursor-pointer" @click="show = false">&times;</p>
                                     </div>
                                 @endif
-                                <div class="text-center lg:text-left">
+                                <div class="text-center flex justify-between">
                                     <h1 class="text-3xl font-bold" id="create_appointment">Create Appointment</h1>
+                                    <form method="dialog">
+                                        <!-- if there is a button in form, it will close the modal -->
+                                        <button class="btn">Close</button>
+                                    </form>
                                 </div>
-                                <div class="w-full max-w-xl">
+                                <div class="max-w-xl">
                                     <form class="mx-full" id="create-appointment-form">
                                     @csrf
                                         <input type="hidden" name="user_id" value="{{Auth::user()->_id}}">
@@ -167,10 +171,7 @@
                                         </div>
                                     </form>
                                 </div>
-                                <form method="dialog">
-                                    <!-- if there is a button in form, it will close the modal -->
-                                    <button class="btn">Close</button>
-                                </form>
+                                
                             </div>
                         </div>
                     </div>
@@ -253,7 +254,7 @@
                     var createAppointment = new FormData(form);
                     console.log(createAppointment);
                     $.ajax({
-                        url: '{{ route("store_appointments") }}',
+                        url: '{{ route("appointment.store") }}',
                         method: 'POST',
                         processData: false,
                         contentType: false,

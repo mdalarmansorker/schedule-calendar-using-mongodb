@@ -28,7 +28,11 @@ Route::middleware('auth')->group(function(){
         return $controller->day_picker(date('m'), Auth::user()->_id);
     })->name('home');
     
-    Route::get('/month/{month}', [AppointmentController::class, 'day_picker'])->where('month', '[1-9]|1[0-2]');
+    Route::get('/month/{month}', function($month){
+        $controller = app()->make(AppointmentController::class);
+        return $controller->day_picker($month, Auth::user()->_id);
+    })->where('month', '[1-9]|1[0-2]');
+    // Route::get('/month/{month}', [AppointmentController::class, 'day_picker'])->where('month', '[1-9]|1[0-2]');
 
     // Create appointment
     // Route::get('/create-appointment', function(){
@@ -39,7 +43,7 @@ Route::middleware('auth')->group(function(){
     })->name('create');
 
     // Store appointments data
-    Route::post('/store-appointment', [AppointmentController::class, 'store_appointments'])->name('store_appointments');
+    Route::post('/appointment/store', [AppointmentController::class, 'StoreAppointment'])->name('appointment.store');
 
 });
 
