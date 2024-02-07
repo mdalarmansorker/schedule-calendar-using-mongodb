@@ -106,7 +106,6 @@ class AppointmentController extends Controller
         appointment::create($validatedData);
 
         // Redirect with success message
-        return redirect()->route('create')->with('success', 'Data submitted successfully!');
-
+        return response()->json(['success' => 'Appointment inserted successfully'], 201);
     }
 }
