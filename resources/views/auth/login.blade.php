@@ -18,19 +18,11 @@
                 </div>
             @endif
             <div class="text-center lg:text-left">
-                <h1 class="text-5xl font-bold lg:px-28">Register now!</h1>
+                <h1 class="text-5xl font-bold lg:px-28">Schedule Calendar</h1>
             </div>
             <div class="rounded-lg shrink-0 w-full max-w-xl shadow-2xl bg-base-100">
-                <form class="p-4" method="post" action="{{ route('register') }}">
+                <form class="p-4" method="post" action="{{ route('login') }}">
                     @csrf
-                    <!-- Name -->
-                    <div class="form-control">
-                        <label class="label">
-                            <span class="label-text">Name</span>
-                        </label>
-                        <input type="text" placeholder="full name" name="name" class="input input-bordered" required />
-                        @error('name') <p class="text-red-500"> {{ $message }} </p> @enderror
-                    </div>
                     <!-- Email -->
                     <div class="form-control">
                         <label class="label">
@@ -48,18 +40,14 @@
                         <input type="password" placeholder="password"name="password" class="input input-bordered" required />
                         @error('password') <p class="text-red-500"> {{ $message }} </p> @enderror
 
-                    </div>
-                    <!-- Confirm Password -->
-                    <div class="form-control">
                         <label class="label">
-                            <span class="label-text">Confirm Password</span>
+                            <a href="#" class="label-text-alt link link-hover">Forgot password?</a>
                         </label>
-                        <input type="password" placeholder="confirm password" name="password_confirmation" class="input input-bordered" required />
-                        @error('confirm-password') <p class="text-red-500"> {{ $message }} </p> @enderror
                     </div>
                     
+                    
                     <div class="form-control mt-6">
-                        <button type="submit" class="btn btn-primary">Sign Up</button>
+                        <button type="submit" class="btn btn-primary">Sign In</button>
                     </div>
                 </form>
             </div>

@@ -2,7 +2,8 @@
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\AppointmentController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\AuthController;
+use App\Http\Controllers\Auth\RegisterUserController;
+use App\Http\Controllers\Auth\AuthenticateUserController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -13,23 +14,37 @@ use App\Http\Controllers\AuthController;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+Route::middleware('guest')->group(function(){
+    Route::get('register', [RegisterUserController::class, 'create'])->name('register');
+    Route::post('register', [RegisterUserController::class, 'store'])->name('register');
 
-Route::get('/', function () {
-    $controller = app()->make(AppointmentController::class);
-    return $controller->day_picker(date('m'));
-})->name('home');
+    Route::get('login', [AuthenticateUserController::class, 'create'])->name('login');
+    Route::post('login', [AuthenticateUserController::class, 'store']);
 
-Route::resource('user', AuthController::class);
-Route::get('/month/{month}', [AppointmentController::class, 'day_picker'])->where('month', '[1-9]|1[0-2]');
+});
+Route::middleware('auth')->group(function(){
+    Route::get('/', function () {
+        $controller = app()->make(AppointmentController::class);
+        return $controller->day_picker(date('m'), Auth::user()->_id);
+    })->name('home');
+    
+    Route::get('/month/{month}', [AppointmentController::class, 'day_picker'])->where('month', '[1-9]|1[0-2]');
 
-// Create appointment
-Route::get('/create-appointment', function(){
-    return view('create_appointment');
-})->name('create');
-Route::get('/month/create-appointment', function(){
-    return view('create_appointment');
-})->name('create');
+    // Create appointment
+    // Route::get('/create-appointment', function(){
+    //     return view('create_appointment');
+    // })->name('create');
+    Route::get('/month/create-appointment', function(){
+        return view('create_appointment');
+    })->name('create');
 
-// Store appointments data
-Route::post('/store-appointment', [AppointmentController::class, 'store_appointments'])->name('store_appointments');
+    // Store appointments data
+    Route::post('/store-appointment', [AppointmentController::class, 'store_appointments'])->name('store_appointments');
+
+});
+
+
+
+
+
 
