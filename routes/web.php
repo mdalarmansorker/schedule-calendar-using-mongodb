@@ -25,12 +25,12 @@ Route::middleware('guest')->group(function(){
 Route::middleware('auth')->group(function(){
     Route::get('/', function () {
         $controller = app()->make(AppointmentController::class);
-        return $controller->day_picker(date('m'), Auth::user()->_id);
+        return $controller->DayPicker(date('m'), Auth::user()->_id);
     })->name('home');
     
     Route::get('/month/{month}', function($month){
         $controller = app()->make(AppointmentController::class);
-        return $controller->day_picker($month, Auth::user()->_id);
+        return $controller->DayPicker($month, Auth::user()->_id);
     })->where('month', '[1-9]|1[0-2]');
     // Route::get('/month/{month}', [AppointmentController::class, 'day_picker'])->where('month', '[1-9]|1[0-2]');
 

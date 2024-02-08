@@ -12,7 +12,7 @@ use Carbon\Carbon;
 
 class AppointmentController extends Controller
 {
-    public function day_picker($month, $user_id){
+    public function DayPicker($month, $user_id){
         $year = 2024;
         $firstDay = date('w', strtotime("$year-$month-01"));
         // dd($firstDay);
@@ -91,6 +91,7 @@ class AppointmentController extends Controller
     }
     public function StoreAppointment(Request $request)
     {
+        
         $validatedData = $request->validate([
             'user_id' => 'required',
             'first_name' => 'required|max:40',
@@ -101,6 +102,9 @@ class AppointmentController extends Controller
             'date' => 'required|date',
             'time' => 'required|date_format:H:i',
         ]);
+        // $validatedData['age'] = intval(($validatedData['age']));
+        // $validatedData['date'] = date("Y-m-d", $validatedData['date']);
+        // $validatedData['time'] = date("H:i", $validatedData['time']);
 
         // Store data in the database
         appointment::create($validatedData);

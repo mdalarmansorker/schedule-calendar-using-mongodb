@@ -16,6 +16,8 @@
         <script src="https://cdn.tailwindcss.com"></script>
         <!-- jquery cdn -->
         <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+        <!-- sweetalart -->
+        <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
     </head>
     <body class="lg:pb-12">
@@ -98,7 +100,7 @@
                 </div>
                 <button class="btn font-bold" onclick="my_modal_1.showModal()">Create Appointment</button>
                 <!-- Create Appointment Modal -->
-                <dialog id="my_modal_1" class="modal">
+                <dialog id="my_modal_1" class="modal appointmentModal">
                     <div class="modal-box">
                         <div class=" ">
                             <div class="">
@@ -260,7 +262,10 @@
                         contentType: false,
                         data: createAppointment,
                         success: function(response){
-                            console.log(response)
+                            $('.appointmentModal').modal('hide');
+                            if(response){
+                                swal("Success!", response.success , "success");
+                            }
                         },
                         error: function(error){
                             console.log(error)
