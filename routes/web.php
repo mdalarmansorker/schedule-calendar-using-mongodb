@@ -45,6 +45,7 @@ Route::middleware('auth')->group(function(){
     // Store appointments data
     Route::post('/appointment/store', [AppointmentController::class, 'StoreAppointment'])->name('appointment.store');
 
+    Route::post('logout', [AuthenticateUserController::class, 'destroy'])->name('logout');
 });
 
 
