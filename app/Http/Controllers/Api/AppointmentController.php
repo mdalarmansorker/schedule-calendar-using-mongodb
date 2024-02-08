@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers\Api;
 
+use Carbon\Carbon;
 use App\Models\Appointment;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Validator;
 
 class AppointmentController extends Controller
 {
@@ -32,33 +34,58 @@ class AppointmentController extends Controller
         }
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
         //
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+
     public function store(Request $request)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'user_id' => 'required|string', 
+            'first_name' => 'required|string', 
+            'last_name' => 'required|string', 
+            'email' => 'required|email', 
+            'gender' => 'required|string', 
+            'date' => 'required', 
+            'time' => 'required', 
+        ]);
+        if($validator->fails())
+        {
+            return response()->json([
+                'status' => 422,
+                'errors' => $validator->messages()
+            ], 422);
+        }
+        else
+        {
+            $appointment = Appointment::create([
+                'user_id' => $request->user_id,
+                'first_name'=>$request->first_name,
+                'last_name'=>$request->last_name,
+                'email'=>$request->email,
+                'gender'=>$request->gender,
+                'date'=>Carbon::parse($request->date)->format('Y-m-d'),
+                'time'=>Carbon::parse($request->time)->format('H:i'),
+            ]);
+            if($appointment)
+            {
+                return response()->json([
+                    'status' => 200,
+                    'message' =>  'Appointment created successfully!'
+                ], 200);
+            }
+            else
+            {
+                return response()->json([
+                    'status' => 500,
+                    'message' =>  'Something went wrong!'
+                ], 500);
+            }
+        }
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function show($id)
     {
         //
