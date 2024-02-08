@@ -20,4 +20,8 @@ class Appointment extends Model
         'date',
         'time',
     ];
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

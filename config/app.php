@@ -165,6 +165,9 @@ return [
         Illuminate\View\ViewServiceProvider::class,
         //MongoDB service provider
         Jenssegers\Mongodb\MongodbServiceProvider::class,
+        // yajra laravel datatable
+        Yajra\DataTables\DataTablesServiceProvider::class,
+
         /*
          * Package Service Providers...
          */

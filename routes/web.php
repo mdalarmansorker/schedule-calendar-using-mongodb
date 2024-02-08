@@ -44,6 +44,8 @@ Route::middleware('auth')->group(function(){
 
     // Store appointments data
     Route::post('/appointment/store', [AppointmentController::class, 'StoreAppointment'])->name('appointment.store');
+    Route::get('/appointment/list', [AppointmentController::class,'Appointments'])->name('appointment.list');
+    Route::get('/appointment/datatable', [AppointmentController::class,'AppointmentDatatable'])->name('appointment.datatable');
 
     Route::post('logout', [AuthenticateUserController::class, 'destroy'])->name('logout');
 });

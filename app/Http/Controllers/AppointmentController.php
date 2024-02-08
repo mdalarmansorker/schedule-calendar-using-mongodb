@@ -9,7 +9,7 @@ use Jenssegers\Mongodb\Eloquent\Builder;
 
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
-
+use DataTable;
 class AppointmentController extends Controller
 {
     public function DayPicker($month, $user_id){
@@ -87,6 +87,13 @@ class AppointmentController extends Controller
             'no_of_date' => $no_of_date,
             'appointments' => $appointments,
         ]);
+        // return response()->json([
+        //     'month' => $monthName,
+        //     'month_no' => $month,
+        //     'day' => $firstDay,
+        //     'no_of_date' => $no_of_date,
+        //     'appointments' => $appointments,
+        // ]);
 
     }
     public function StoreAppointment(Request $request)
@@ -112,4 +119,44 @@ class AppointmentController extends Controller
         // Redirect with success message
         return response()->json(['success' => 'Appointment inserted successfully'], 201);
     }
+
+    public function Appointments()
+    {
+        return view('appointments');
+    }
+    public function AppointmentDatatable(Request $request)
+    {
+        $appointments = Appointment::all();
+        if($request->ajax())
+        {
+            return DataTable::of($appointments)->make(true);
+        }
+    }
+    // public function AppointmentDatatable(Request $request)
+    // {
+    //     if ($request->ajax()) {
+    //         $appointments = Appointment::with('user')->get();
+            
+    //         return DataTable::of($appointments)
+    //             ->addColumn('user_id', function($appointment) {
+    //                 return $appointment->user ? $appointment->user->id : 'N/A';
+    //             })
+    //             ->addColumn('first_name', function($appointment) {
+    //                 return $appointment->user ? $appointment->user->first_name : 'N/A';
+    //             })
+    //             ->addColumn('last_name', function($appointment) {
+    //                 return $appointment->user ? $appointment->user->last_name : 'N/A';
+    //             })
+    //             ->addColumn('email', function($appointment) {
+    //                 return $appointment->user ? $appointment->user->email : 'N/A';
+    //             })
+    //             ->addColumn('gender', function($appointment) {
+    //                 return $appointment->user ? $appointment->user->gender : 'N/A';
+    //             })
+    //             ->rawColumns(['user_id', 'first_name', 'last_name', 'email', 'gender', 'date', 'time', 'created_at'])
+    //             ->make(true);
+    //     }
+
+    //     return view('appointments'); // Replace 'your_view' with your actual view file
+    // }
 }
