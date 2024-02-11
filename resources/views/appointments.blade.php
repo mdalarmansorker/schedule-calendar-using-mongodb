@@ -94,7 +94,7 @@
             <table class="table table-xs" id="appointments">
                 <thead>
                     <tr>
-                        <th>User ID</th> 
+                        <th>Appointment for</th> 
                         <th>First Name</th> 
                         <th>Last Name</th> 
                         <th>Email</th> 
@@ -108,7 +108,7 @@
                 
                 </tbody> 
                 <tfoot>
-                        <th>User ID</th> 
+                        <th>Appointment for</th> 
                         <th>First Name</th> 
                         <th>Last Name</th> 
                         <th>Email</th> 
@@ -137,7 +137,7 @@
                     serverSide: true,
                     ajax: "{{ route('appointment.datatable') }}",
                     columns: [
-                        { data: 'user_id'},
+                        { data: 'user.name'},
                         { data: 'first_name' },
                         { data: 'last_name' },
                         { data: 'email' },
@@ -146,6 +146,11 @@
                         { data: 'time' },
                         { data: 'created_at' },
                     ]
+                });
+                // Listen for the 'newDataAdded' event
+                $(document).on('newDataAdded', function() {
+                    // Reload the DataTable to fetch the latest data
+                    dataTable.ajax.reload();
                 });
             });
         </script>

@@ -17,7 +17,8 @@ class AppointmentController extends Controller
      */
     public function index()
     {
-        $appointments = Appointment::all();
+        // $appointments = Appointment::all();
+        $appointments = Appointment::with('user:name')->get();
         if($appointments->count() > 0)
         {
             return response()->json([

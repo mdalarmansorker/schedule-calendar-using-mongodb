@@ -2,14 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use App\Models\Appointment;
 use Illuminate\Http\Request;
-use Jenssegers\Mongodb\Eloquent\Model as Eloquent;
-use Jenssegers\Mongodb\Eloquent\Builder;
-
 use Illuminate\Support\Facades\DB;
-use Carbon\Carbon;
-use DataTable;
+
+use Jenssegers\Mongodb\Eloquent\Builder;
+// use DataTable;
+use Yajra\DataTables\Facades\DataTables as DataTable;
+use Jenssegers\Mongodb\Eloquent\Model as Eloquent;
 class AppointmentController extends Controller
 {
     public function DayPicker($month, $user_id){
@@ -126,7 +127,10 @@ class AppointmentController extends Controller
     }
     public function AppointmentDatatable(Request $request)
     {
-        $appointments = Appointment::all();
+        // $appointments = Appointment::all();
+        $appointments = Appointment::with('user:name')
+                        ->orderBy('created_at', 'desc')
+                        ->get();
         if($request->ajax())
         {
             return DataTable::of($appointments)->make(true);
